@@ -168,7 +168,16 @@ const root = {
   },
 };
 
-// 5. Mount the GraphQL handler on the /graphql endpoint
+// 5. Add a default route handler for the root path (/)
+// This prevents the "Cannot GET /" or "Cannot POST /" error pages for the root URL.
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "RSVP GraphQL API is running.",
+    endpoint: "/graphql",
+  });
+});
+
+// 6. Mount the GraphQL handler on the /graphql endpoint
 app.all(
   "/graphql",
   createHandler({
